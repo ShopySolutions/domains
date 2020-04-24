@@ -1,0 +1,11 @@
+{
+  "freeway": {
+    "available": "Disponible",
+    "notAvailable": "Indisponible",
+    "price": "Prix",
+    "discountPrice": "Prix bas",
+    "renewPrice": "Renouveler le prix",
+    "transferPrice": "Prix de transfert",
+    "transferDiscountPrice": "Prix Discount Transfert"
+  }
+}

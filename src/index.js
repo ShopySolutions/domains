@@ -3,15 +3,19 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import MainProvider from "./Context/MainContext";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+const rootEl = document.getElementById('root');
+const render = (Component) => ReactDOM.render(
+        <MainProvider>
+            <div>
+                <Component />
+            </div>
+        </MainProvider>,
+    rootEl
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+render(App);
+
 serviceWorker.unregister();
+
