@@ -128,6 +128,7 @@ function Home() {
     const [domainName, setDomainName] = useState('shoes');
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [extention, setExtension] = useState('.com');
+    const [disableDropdown, setDisableDropdown] = useState(false);
     const {t} = useTranslation();
 
     const openExtensionMenue = (event) => {
@@ -136,7 +137,9 @@ function Home() {
 
     const changeExtensionMenue = (value) => {
         setAnchorEl(null);
-        setExtension(value)
+        if (_.isString(value)) {
+            setExtension(value)
+        }
     };
 
 
@@ -172,6 +175,14 @@ function Home() {
 
     const handleChange = (event) => {
         setDomainName(event.target.value);
+        const domainName = event.target.value;
+        let regularExp = new RegExp(/^((?:(?:(?:\w[\.\-\+]?)*)\w)+)((?:(?:(?:\w[\.\-\+]?){0,62})\w)+)\.(\w{2,6})$/);
+        const check = domainName.match(regularExp);
+        if (check !== null) {
+            setDisableDropdown(true)
+        } else {
+            setDisableDropdown(false)
+        }
     };
 
 
@@ -190,6 +201,7 @@ function Home() {
                         />
                         <Divider className={classes.divider} orientation="vertical"/>
                         <Button size={"large"} aria-controls="simple-menu" aria-haspopup="true"
+                                disabled={disableDropdown}
                                 onClick={openExtensionMenue}>
                             {extention}
                         </Button>
@@ -201,7 +213,8 @@ function Home() {
                             onClose={changeExtensionMenue}
                         >
                             {extentions.length > 0 ? extentions.map((value, index) =>
-                                <MenuItem onClick={() => changeExtensionMenue(value)} key={index}>{value}</MenuItem>
+                                <MenuItem value={value} onClick={() => changeExtensionMenue(value)}
+                                          key={index}>{value}</MenuItem>
                             ) : ""}
 
                         </Menu>
