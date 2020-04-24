@@ -23,6 +23,10 @@ const useStyles = makeStyles((theme) => ({
     },
     logo: {
         maxHeight: "50px"
+    },
+    menueItem: {
+        borderRadius: "20px",
+        marginRight:"1%"
     }
 
 }));
@@ -39,6 +43,7 @@ export default function MenuAppBar() {
 
         <AppBar
             className={clsx(classes.root)}
+            color={"default"}
         >
             <Container className={classes.cardGrid} maxWidth="lg">
                 <Toolbar>
@@ -49,10 +54,10 @@ export default function MenuAppBar() {
                     />
 
                     <div className={classes.flexGrow}/>
-                    <Button color="inherit">Home</Button>
-                    <Button color="inherit">Service</Button>
-                    <Button color="inherit">About</Button>
-                    <Button color="inherit">Contact</Button>
+                    <Button color="secondary" variant={"contained"} className={classes.menueItem}>Home</Button>
+                    <Button color="secondary" variant={"contained"} className={classes.menueItem}>Service</Button>
+                    <Button color="secondary" variant={"contained"} className={classes.menueItem}>About</Button>
+                    <Button color="secondary" variant={"contained"} className={classes.menueItem}>Contact</Button>
                     <Tooltip title="Light">
                         <IconButton size="small" className={clsx(classes.themeIcon, classes.signOutButton)}
                                     onClick={handleTheme}>

@@ -16,13 +16,20 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import Chip from "@material-ui/core/Chip";
 import {useTranslation} from "react-i18next";
-
+import _ from "lodash"
 
 const useStyles = makeStyles((theme) => ({
     heroContent: {
         backgroundColor: theme.palette.background.paper,
         padding: theme.spacing(10, 0, 6),
-        backgroundImage:"linear-gradient(to right,#2e5ae8,#4242be,#442c96,#3d1770,#31034e)"
+        backgroundImage: "linear-gradient(to right,#2e5ae8,#4242be,#442c96,#3d1770,#31034e)",
+        [theme.breakpoints.down('sm')]: {
+            minHeight: "250px",
+        },
+        [theme.breakpoints.up('md')]: {
+            minHeight: "350px",
+        },
+
     },
     cardGrid: {
         paddingTop: theme.spacing(8),
@@ -47,8 +54,14 @@ const useStyles = makeStyles((theme) => ({
     paperSearch: {
         display: 'flex',
         alignItems: 'center',
-        borderRadius: "20px",
-        boxShadow: "1px 1px 10px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)"
+        borderRadius: "36px",
+        boxShadow: "1px 1px 10px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
+        [theme.breakpoints.down('sm')]: {
+            marginTop: "10%"
+        },
+        [theme.breakpoints.up('md')]: {
+            marginTop: "10%"
+        },
     },
 
     inputSearch: {
@@ -76,7 +89,14 @@ const useStyles = makeStyles((theme) => ({
     },
     divider: {
         height: 28,
-        margin: 4,
+
+        [theme.breakpoints.down('sm')]: {
+            margin: 10,
+        },
+        [theme.breakpoints.up('md')]: {
+            margin: 18,
+        },
+
     },
     cardDivider: {
         height: '90%',
@@ -136,11 +156,12 @@ function Home() {
             .then((respose) => {
                 // eslint-disable-next-line array-callback-return
                 respose.sort((a, b) => {
-                    if (a.prix.achat && b.prix.achat && a.prix.achat > 0 && b.prix.achat > 0) {
+                    if ((a && a.prix && a.prix.achat && a.prix.achat > 0) && (b && b.prix && b.prix.achat && b.prix.achat && b.prix.achat > 0)) {
                         return a.prix.achat - b.prix.achat
                     }
                 });
-                setResults(respose)
+                const filtered = _.filter(respose, obj => !_.has(obj, "err"));
+                setResults(filtered)
             });
     };
 
@@ -154,8 +175,6 @@ function Home() {
         <>
             <div className={classes.heroContent}>
                 <Container maxWidth="md">
-
-                    {/*Search pannel*/}
                     <Paper component="form" className={classes.paperSearch}>
                         <InputBase
                             placeholder="Enter Item name"
@@ -166,7 +185,8 @@ function Home() {
                             name="Name"
                         />
                         <Divider className={classes.divider} orientation="vertical"/>
-                        <Button aria-controls="simple-menu" aria-haspopup="true" onClick={openExtensionMenue}>
+                        <Button size={"large"} aria-controls="simple-menu" aria-haspopup="true"
+                                onClick={openExtensionMenue}>
                             {extention}
                         </Button>
                         <Menu
