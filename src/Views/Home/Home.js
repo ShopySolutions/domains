@@ -155,9 +155,13 @@ function Home() {
             )
             .then((respose) => {
                 // eslint-disable-next-line array-callback-return
-                respose.sort((a, b) => {
-                    if ((a && a.prix && a.prix.achat && a.prix.achat > 0) && (b && b.prix && b.prix.achat && b.prix.achat && b.prix.achat > 0)) {
-                        return a.prix.achat - b.prix.achat
+                respose.sort((first, second) => {
+                    if (
+                        (first && first.prix && first.prix.achat && first.prix.achat > 0)
+                        &&
+                        (second && second.prix && second.prix.achat && second.prix.achat && second.prix.achat > 0)
+                    ) {
+                        return first.prix.achat - second.prix.achat
                     }
                 });
                 const filtered = _.filter(respose, obj => !_.has(obj, "err"));
