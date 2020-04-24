@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
     heroContent: {
         backgroundColor: theme.palette.background.paper,
         padding: theme.spacing(10, 0, 6),
+        backgroundImage:"linear-gradient(to right,#2e5ae8,#4242be,#442c96,#3d1770,#31034e)"
     },
     cardGrid: {
         paddingTop: theme.spacing(8),
