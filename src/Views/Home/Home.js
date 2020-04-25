@@ -176,6 +176,7 @@ function Home() {
     const handleChange = (event) => {
         setDomainName(event.target.value);
         const domainName = event.target.value;
+        // eslint-disable-next-line no-useless-escape
         let regularExp = new RegExp(/^((?:(?:(?:\w[\.\-\+]?)*)\w)+)((?:(?:(?:\w[\.\-\+]?){0,62})\w)+)\.(\w{2,6})$/);
         const check = domainName.match(regularExp);
         if (check !== null) {

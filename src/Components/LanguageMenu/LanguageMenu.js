@@ -1,6 +1,6 @@
 import React, {memo, useContext, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
-import {IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip} from '@material-ui/core';
+import {IconButton, ListItemText, Menu, MenuItem, Tooltip} from '@material-ui/core';
 import {Language} from '@material-ui/icons';
 import {MainContext} from "../../Context/MainContext";
 
@@ -23,7 +23,7 @@ function LanguageMenu(props) {
         <IconButton
           ref={moreRef}
           size="small"
-          color="inherit"
+          color="secondary"
           onClick={handleMenuOpen}
           {...props}
         >

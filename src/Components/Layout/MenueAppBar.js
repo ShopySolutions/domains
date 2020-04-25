@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     },
     menueItem: {
         borderRadius: "20px",
-        marginRight:"1%"
+        marginRight: "1%"
     }
 
 }));
@@ -37,7 +37,7 @@ export default function MenuAppBar() {
     const [switchData, setSwitchData] = useState();
     const handleTheme = () => {
         setTheme(localStorage.getItem('theme') === 'dark' ? 'light' : 'dark')
-        setSwitchData(localStorage.getItem('theme') === 'dark')
+        setSwitchData(localStorage.getItem('theme'))
     };
     return (
 
@@ -59,7 +59,7 @@ export default function MenuAppBar() {
                     <Button color="secondary" variant={"contained"} className={classes.menueItem}>About</Button>
                     <Button color="secondary" variant={"contained"} className={classes.menueItem}>Contact</Button>
                     <Tooltip title="Light">
-                        <IconButton size="small" className={clsx(classes.themeIcon, classes.signOutButton)}
+                        <IconButton size="small" color={"secondary"} className={classes.signOutButton}
                                     onClick={handleTheme}>
                             <WbSunnyOutlined/>
                         </IconButton>
