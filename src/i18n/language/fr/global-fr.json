@@ -6,6 +6,11 @@
     "discountPrice": "Prix bas",
     "renewPrice": "Renouveler le prix",
     "transferPrice": "Prix de transfert",
-    "transferDiscountPrice": "Prix Discount Transfert"
+    "transferDiscountPrice": "Prix Discount Transfert",
+    "domainSearch": "Recherchez votre domaine avec le prix le plus bas de tous les temps!",
+    "home": "Accueil",
+    "service": "Un service",
+    "about": "À propos de",
+    "contact": "Contact"
   }
 }

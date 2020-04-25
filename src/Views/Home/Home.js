@@ -256,8 +256,7 @@ function Home() {
                             </IconButton>
                         </Tooltip>
                     </Paper>
-                    <Typography variant={"h1"} component={"h1"} className={classes.quote}> Search your Domain with
-                        Lowest Price Ever !</Typography>
+                    <Typography variant={"h1"} component={"h1"} className={classes.quote}>{t("freeway.domainSearch")}</Typography>
 
                 </Container>
             </div>
@@ -397,7 +396,7 @@ function Home() {
                                 />
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="h2">
-                                        Lizard
+                                        DEMO
                                     </Typography>
                                     <Typography variant="body2" color="textSecondary" component="p">
                                         Lizards are a widespread group of squamate reptiles, with over 6,000 species,
@@ -420,7 +419,7 @@ function Home() {
                                 />
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="h2">
-                                        Lizard
+                                        DEMO
                                     </Typography>
                                     <Typography variant="body2" color="textSecondary" component="p">
                                         Lizards are a widespread group of squamate reptiles, with over 6,000 species,
@@ -443,7 +442,7 @@ function Home() {
                                 />
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="h2">
-                                        Lizard
+                                        DEMO
                                     </Typography>
                                     <Typography variant="body2" color="textSecondary" component="p">
                                         Lizards are a widespread group of squamate reptiles, with over 6,000 species,

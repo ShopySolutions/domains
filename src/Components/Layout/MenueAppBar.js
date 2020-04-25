@@ -10,6 +10,7 @@ import {WbSunnyOutlined} from "@material-ui/icons";
 import LanguageMenu from "../LanguageMenu/LanguageMenu";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
+import {useTranslation} from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -35,6 +36,7 @@ export default function MenuAppBar() {
     const classes = useStyles();
     const {setTheme} = useContext(MainContext);
     const [switchData, setSwitchData] = useState();
+    const {t}=useTranslation()
     const handleTheme = () => {
         setTheme(localStorage.getItem('theme') === 'dark' ? 'light' : 'dark')
         setSwitchData(localStorage.getItem('theme'))
@@ -54,10 +56,10 @@ export default function MenuAppBar() {
                     />
 
                     <div className={classes.flexGrow}/>
-                    <Button color="secondary" variant={"contained"} className={classes.menueItem}>Home</Button>
-                    <Button color="secondary" variant={"contained"} className={classes.menueItem}>Service</Button>
-                    <Button color="secondary" variant={"contained"} className={classes.menueItem}>About</Button>
-                    <Button color="secondary" variant={"contained"} className={classes.menueItem}>Contact</Button>
+                    <Button color="secondary" variant={"contained"} className={classes.menueItem}>{t("freeway.home")}</Button>
+                    <Button color="secondary" variant={"contained"} className={classes.menueItem}>{t("freeway.service")}</Button>
+                    <Button color="secondary" variant={"contained"} className={classes.menueItem}>{t("freeway.about")}</Button>
+                    <Button color="secondary" variant={"contained"} className={classes.menueItem}>{t("freeway.contact")}</Button>
                     <Tooltip title="Light">
                         <IconButton size="small" color={"secondary"} className={classes.signOutButton}
                                     onClick={handleTheme}>
