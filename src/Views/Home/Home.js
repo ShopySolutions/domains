@@ -17,6 +17,10 @@ import Menu from "@material-ui/core/Menu";
 import Chip from "@material-ui/core/Chip";
 import {useTranslation} from "react-i18next";
 import _ from "lodash"
+import CardMedia from "@material-ui/core/CardMedia";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme) => ({
     heroContent: {
@@ -116,6 +120,18 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
+    },
+    quote: {
+        textAlign: "center",
+        marginTop: "20px",
+        color: theme.palette.background.default
+    },
+    backdrop: {
+        zIndex: theme.zIndex.drawer + 1,
+        color: '#fff',
+    },
+    searchButton: {
+        marginRight: "12px"
     }
 
 }));
@@ -125,11 +141,12 @@ const extentions = [".com", ".fr", ".be", ".org", ".net", ".io", ".info", ".top"
 function Home() {
     const classes = useStyles();
     const [results, setResults] = useState([]);
-    const [domainName, setDomainName] = useState('shoes');
+    const [domainName, setDomainName] = useState('');
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [extention, setExtension] = useState('.com');
     const [disableDropdown, setDisableDropdown] = useState(false);
     const {t} = useTranslation();
+    const [open, setOpen] = React.useState(false);
 
     const openExtensionMenue = (event) => {
         setAnchorEl(event.currentTarget);
@@ -145,13 +162,22 @@ function Home() {
 
     const fetchData = async () => {
         setResults([])
+        setOpen(true);
+
+        let domainNameSearch;
+        if (disableDropdown) {
+            domainNameSearch = domainName
+        } else {
+            domainNameSearch = domainName + extention
+        }
+
 
         Promise.all([
-            fetch(`http://api.toevenstay.com:3000/api/domain/get/ovh/${domainName}`),
-            fetch(`http://api.toevenstay.com:3000/api/domain/get/infomaniak/${domainName}`),
-            fetch(`http://api.toevenstay.com:3000/api/domain/get/godaddy/${domainName}`),
-            fetch(`http://api.toevenstay.com:3000/api/domain/get/porkbun/${domainName}`),
-            fetch(`http://api.toevenstay.com:3000/api/domain/get/lws/${domainName}`)
+            fetch(`http://api.toevenstay.com:3000/api/domain/get/ovh/${domainNameSearch}`),
+            fetch(`http://api.toevenstay.com:3000/api/domain/get/infomaniak/${domainNameSearch}`),
+            fetch(`http://api.toevenstay.com:3000/api/domain/get/godaddy/${domainNameSearch}`),
+            fetch(`http://api.toevenstay.com:3000/api/domain/get/porkbun/${domainNameSearch}`),
+            fetch(`http://api.toevenstay.com:3000/api/domain/get/lws/${domainNameSearch}`)
         ])
             .then(([ovh, infomaniak, godaddy, porkbun, lws]) =>
                 Promise.all([ovh.json(), infomaniak.json(), godaddy.json(), porkbun.json(), lws.json()])
@@ -169,6 +195,8 @@ function Home() {
                 });
                 const filtered = _.filter(respose, obj => !_.has(obj, "err"));
                 setResults(filtered)
+                setOpen(false);
+
             });
     };
 
@@ -193,7 +221,7 @@ function Home() {
                 <Container maxWidth="md">
                     <Paper component="form" className={classes.paperSearch}>
                         <InputBase
-                            placeholder="Enter Item name"
+                            placeholder="Enter domain name . . ."
                             value={domainName}
                             onChange={handleChange}
                             className={classes.inputSearch}
@@ -223,11 +251,14 @@ function Home() {
 
                         <Divider className={classes.divider} orientation="vertical"/>
                         <Tooltip title="Search">
-                            <IconButton type="button" className={classes.button} onClick={() => fetchData()}>
+                            <IconButton type="button" className={classes.searchButton} onClick={() => fetchData()}>
                                 <Search/>
                             </IconButton>
                         </Tooltip>
                     </Paper>
+                    <Typography variant={"h1"} component={"h1"} className={classes.quote}> Search your Domain with
+                        Lowest Price Ever !</Typography>
+
                 </Container>
             </div>
             <Container className={classes.cardGrid} maxWidth="md">
@@ -349,6 +380,88 @@ function Home() {
                     )) : ""}
                 </Grid>
             </Container>
+
+
+            <Container maxWidth={"md"}>
+
+                <Grid container spacing={4}>
+                    <Grid item xs={12} sm={12} md={6} lg={4}>
+                        <Card>
+                            <CardActionArea>
+                                <CardMedia
+                                    component="img"
+                                    alt="Contemplative Reptile"
+                                    height="140"
+                                    image="/logov1.png"
+                                    title="Contemplative Reptile"
+                                />
+                                <CardContent>
+                                    <Typography gutterBottom variant="h5" component="h2">
+                                        Lizard
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary" component="p">
+                                        Lizards are a widespread group of squamate reptiles, with over 6,000 species,
+                                        ranging
+                                        across all continents except Antarctica
+                                    </Typography>
+                                </CardContent>
+                            </CardActionArea>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6} lg={4}>
+                        <Card>
+                            <CardActionArea>
+                                <CardMedia
+                                    component="img"
+                                    alt="Contemplative Reptile"
+                                    height="140"
+                                    image="/logov1.png"
+                                    title="Contemplative Reptile"
+                                />
+                                <CardContent>
+                                    <Typography gutterBottom variant="h5" component="h2">
+                                        Lizard
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary" component="p">
+                                        Lizards are a widespread group of squamate reptiles, with over 6,000 species,
+                                        ranging
+                                        across all continents except Antarctica
+                                    </Typography>
+                                </CardContent>
+                            </CardActionArea>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6} lg={4}>
+                        <Card>
+                            <CardActionArea>
+                                <CardMedia
+                                    component="img"
+                                    alt="Contemplative Reptile"
+                                    height="140"
+                                    image="/logov1.png"
+                                    title="Contemplative Reptile"
+                                />
+                                <CardContent>
+                                    <Typography gutterBottom variant="h5" component="h2">
+                                        Lizard
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary" component="p">
+                                        Lizards are a widespread group of squamate reptiles, with over 6,000 species,
+                                        ranging
+                                        across all continents except Antarctica
+                                    </Typography>
+                                </CardContent>
+                            </CardActionArea>
+                        </Card>
+                    </Grid>
+                </Grid>
+            </Container>
+
+
+            <Backdrop className={classes.backdrop} open={open}>
+                <CircularProgress color="inherit"/>&nbsp;&nbsp;&nbsp;Searching your expected domain with best price . .
+            </Backdrop>
+
         </>
     );
 }
