@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import {Search} from "@material-ui/icons";
+import {Euro, Search} from "@material-ui/icons";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
@@ -21,6 +21,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Badge from "@material-ui/core/Badge";
 
 const useStyles = makeStyles((theme) => ({
     heroContent: {
@@ -101,6 +102,9 @@ const useStyles = makeStyles((theme) => ({
             margin: 18,
         },
 
+    },
+    cardDetailsDivider: {
+        marginTop: '20px'
     },
     cardDivider: {
         height: '90%',
@@ -183,20 +187,16 @@ function Home() {
                 Promise.all([ovh.json(), infomaniak.json(), godaddy.json(), porkbun.json(), lws.json()])
             )
             .then((respose) => {
-                // eslint-disable-next-line array-callback-return
-                respose.sort((first, second) => {
-                    if (
-                        (first && first.prix && first.prix.achat && first.prix.achat > 0)
-                        &&
-                        (second && second.prix && second.prix.achat && second.prix.achat && second.prix.achat > 0)
-                    ) {
-                        return first.prix.achat - second.prix.achat
+                const sorting = _.sortBy(respose, [function (o) {
+                    if (o.prix.achatAvecReduction && o.prix.achatAvecReduction !== null) {
+                        return o.prix['achatAvecReduction'];
+                    } else {
+                        return o.prix['achat'];
                     }
-                });
-                const filtered = _.filter(respose, obj => !_.has(obj, "err"));
+                }]);
+                const filtered = _.filter(sorting, obj => !_.has(obj, "err"));
                 setResults(filtered)
                 setOpen(false);
-
             });
     };
 
@@ -256,7 +256,8 @@ function Home() {
                             </IconButton>
                         </Tooltip>
                     </Paper>
-                    <Typography variant={"h1"} component={"h1"} className={classes.quote}>{t("freeway.domainSearch")}</Typography>
+                    <Typography variant={"h1"} component={"h1"}
+                                className={classes.quote}>{t("freeway.domainSearch")}</Typography>
 
                 </Container>
             </div>
@@ -264,26 +265,29 @@ function Home() {
                 <Grid container spacing={4}>
                     {results != null && results.length > 0 ? results.map((item, index) => (
                         <Grid item key={index} xs={12} sm={12} md={12}>
+
                             <Card className={classes.card}>
-                                {/*{"domain":"shoes.com","prix":{"renouvelement":11.988,"achat":null,"achatAvecReduction":null,"transfert":11.988,"transfertAvecReduction":8.988}}*/}
                                 <CardContent className={classes.cardContent}>
                                     <Grid container>
                                         <Grid item xs={8} sm={8} md={8}>
 
-                                            <Grid container direction={"row"} alignItems={"center"} justify={"center"}>
+                                            <Grid container direction={"row"} alignItems={"center"}
+                                                  justify={"center"}>
                                                 <Typography gutterBottom variant="h3" component="h3">
                                                     {item.domain}
                                                 </Typography>
                                             </Grid>
-                                            <Grid container direction={"row"} alignItems={"center"} justify={"center"}>
-                                                <Typography gutterBottom variant="h3" component="h3">
+                                            <Grid container direction={"row"} alignItems={"center"}
+                                                  justify={"center"}>
+                                                <Typography gutterBottom variant="h5" component="h5">
                                                     <Chip
-                                                        label={item.prix.achat !== null ? <>{t('freeway.available')}</> : <>{t('freeway.notAvailable')}</>}
-                                                        color={item.prix.achat !== null ? "primary" : "secondary"}
+                                                        label={item.fournisseur}
+                                                        color="primary"
                                                     />
                                                 </Typography>
                                             </Grid>
-                                            <Grid container direction={"row"} alignItems={"center"} justify={"center"}>
+                                            <Grid container direction={"row"} alignItems={"center"}
+                                                  justify={"center"}>
 
                                                 {item.prix.renouvelement > 0 ? (
                                                     <Grid item xs={4} sm={4} md={4}>
@@ -293,7 +297,7 @@ function Home() {
                                                         </Typography>
                                                         <Typography gutterBottom variant="h4" component="h2"
                                                                     className={classes.center}>
-                                                            {item.prix.renouvelement}
+                                                            {item.prix.renouvelement}&nbsp;€
                                                         </Typography>
                                                     </Grid>
                                                 ) : ""}
@@ -305,25 +309,25 @@ function Home() {
                                                         </Typography>
                                                         <Typography gutterBottom variant="h4" component="h2"
                                                                     className={classes.center}>
-                                                            {item.prix.transfert}
+                                                            {item.prix.transfert}&nbsp;€
                                                         </Typography>
                                                     </Grid>
                                                 ) : ""}
 
                                                 {item.prix.transfertAvecReduction > 0 ? (
                                                     <Grid item xs={4} sm={4} md={4}>
+
                                                         <Typography gutterBottom variant="h6" component="h6"
                                                                     className={classes.center}>
                                                             {t('freeway.transferDiscountPrice')}
                                                         </Typography>
                                                         <Typography gutterBottom variant="h4" component="h2"
                                                                     className={classes.center}>
-                                                            {item.prix.transfertAvecReduction}
+                                                            {item.prix.transfertAvecReduction}&nbsp;€
                                                         </Typography>
                                                     </Grid>
                                                 ) : ""}
                                             </Grid>
-
                                         </Grid>
                                         <Grid item xs={1} sm={1} md={1}>
                                             <Divider orientation="vertical" className={classes.marginCenter}/>
@@ -339,7 +343,7 @@ function Home() {
                                                             <Typography gutterBottom variant="h3"
                                                                         component="h3"
                                                                         className={classes.center}>
-                                                                <del>{item.prix.achat}</del>
+                                                                <del>{item.prix.achat}&nbsp;€</del>
                                                             </Typography>
 
 
@@ -348,7 +352,7 @@ function Home() {
                                                                         className={classes.center}>{t('freeway.discountPrice')}</Typography>
                                                             <Typography gutterBottom variant="h3"
                                                                         component="h3"
-                                                                        className={classes.center}>{item.prix.achatAvecReduction}</Typography>
+                                                                        className={classes.center}>{item.prix.achatAvecReduction}&nbsp;€</Typography>
                                                         </>
                                                     ) : item.prix.achat > 0 ? (
                                                         <>
@@ -357,7 +361,7 @@ function Home() {
                                                                         className={classes.center}>{t('freeway.price')}</Typography>
                                                             <Typography gutterBottom variant="h3"
                                                                         component="h3"
-                                                                        className={classes.center}>{item.prix.achat}</Typography>
+                                                                        className={classes.center}>{item.prix.achat}&nbsp;€</Typography>
                                                         </>
                                                     ) : ""}
 
