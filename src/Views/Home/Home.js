@@ -251,7 +251,8 @@ function Home() {
 
                         <Divider className={classes.divider} orientation="vertical"/>
                         <Tooltip title="Search">
-                            <IconButton type="button" className={classes.searchButton} onClick={() => fetchData()}>
+                            <IconButton type="button" className={classes.searchButton}
+                                        onClick={() => fetchData()}>
                                 <Search/>
                             </IconButton>
                         </Tooltip>
@@ -297,7 +298,7 @@ function Home() {
                                                         </Typography>
                                                         <Typography gutterBottom variant="h4" component="h2"
                                                                     className={classes.center}>
-                                                            {item.prix.renouvelement}&nbsp;€
+                                                            {Number(item.prix.renouvelement).toFixed(2)}&nbsp;€
                                                         </Typography>
                                                     </Grid>
                                                 ) : ""}
@@ -309,7 +310,7 @@ function Home() {
                                                         </Typography>
                                                         <Typography gutterBottom variant="h4" component="h2"
                                                                     className={classes.center}>
-                                                            {item.prix.transfert}&nbsp;€
+                                                            {Number(item.prix.transfert).toFixed(2)}&nbsp;€
                                                         </Typography>
                                                     </Grid>
                                                 ) : ""}
@@ -323,7 +324,7 @@ function Home() {
                                                         </Typography>
                                                         <Typography gutterBottom variant="h4" component="h2"
                                                                     className={classes.center}>
-                                                            {item.prix.transfertAvecReduction}&nbsp;€
+                                                            {Number(item.prix.transfertAvecReduction).toFixed(2)}&nbsp;€
                                                         </Typography>
                                                     </Grid>
                                                 ) : ""}
@@ -343,7 +344,7 @@ function Home() {
                                                             <Typography gutterBottom variant="h3"
                                                                         component="h3"
                                                                         className={classes.center}>
-                                                                <del>{item.prix.achat}&nbsp;€</del>
+                                                                <del>{Number(item.prix.achat).toFixed(2)}&nbsp;€</del>
                                                             </Typography>
 
 
@@ -352,7 +353,7 @@ function Home() {
                                                                         className={classes.center}>{t('freeway.discountPrice')}</Typography>
                                                             <Typography gutterBottom variant="h3"
                                                                         component="h3"
-                                                                        className={classes.center}>{item.prix.achatAvecReduction}&nbsp;€</Typography>
+                                                                        className={classes.center}>{Number(item.prix.achatAvecReduction).toFixed(2)}&nbsp;€</Typography>
                                                         </>
                                                     ) : item.prix.achat > 0 ? (
                                                         <>
@@ -361,7 +362,7 @@ function Home() {
                                                                         className={classes.center}>{t('freeway.price')}</Typography>
                                                             <Typography gutterBottom variant="h3"
                                                                         component="h3"
-                                                                        className={classes.center}>{item.prix.achat}&nbsp;€</Typography>
+                                                                        className={classes.center}>{Number(item.prix.achat).toFixed(2)}&nbsp;€</Typography>
                                                         </>
                                                     ) : ""}
 
